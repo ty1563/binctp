@@ -130,7 +130,9 @@ Route::get("/recover",[AccountController::class,'recover']);
 // Nạp Tiền
 Route::get('/naptien', [ClientController::class, 'naptien'])->middleware('khachCheck');
 Route::post('/autoTheCao',[ApiConTroller::class,'autoTheCao'])->middleware('khachCheck');
-Route::get('/callback-thecao', [CallbackController::class,'callBackTheCao']);
+Route::get('/autoMB',[ApiConTroller::class,'autoMB']);
+Route::get('/autoCongTien',[ApiConTroller::class,'autoCongTien']);
+Route::get('/callback-thecao', [CallbackController::class,'callBackTheCao'])->name('thecao');
 
 
 Route::post("/checkout/tiktok", [ClientController::class, 'checkout_tiktok']);

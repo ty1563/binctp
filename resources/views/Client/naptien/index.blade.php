@@ -70,17 +70,17 @@
                                 <table v-if="select===0" class="table table-bordered">
                                     <tbody>
                                         <tr>
-                                            <th class="text-center">Ngân Hàng</th>
-                                            <th class="text-center">Số Tài Khoản</th>
-                                            <th class="text-center">Chủ Tài Khoản</th>
-                                            <th class="text-center">Mã Nạp Tiền</th>
+                                            <th class="text-center align-middle" >Ngân Hàng</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 20%;"><img
+                                                src="/assets_client/img/mb.png"></td>
                                         </tr>
                                         <tr>
-                                            <td class="text-center" style="width: 30%;"><img
-                                                    src="/assets_client/img/saccombank.png"></td>
-                                            <td class="text-center">060154470452</td>
-                                            <td class="text-center">CHUNG TUAN PHAT</td>
-                                            <td class="text-center"><a @click="copyMa()" href="#"
+                                            <th class="text-center align-middle">Chủ Tài Khoản</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">NGUYEN VAN TY</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle">Nội Dung</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;"><a @click="copyMa()" href="#"
                                                     class="text-primary"><b>@{{ ma }}</b></a></td>
                                         </tr>
                                     </tbody>
@@ -88,48 +88,54 @@
 
                                 {{-- MOMO  --}}
                                 <table v-if="select===1" class="table table-bordered">
-                                    <tr>
-                                        <th class="text-center">MOMO</th>
-                                        <th class="text-center">Số Điện Thoại</th>
-                                        <th class="text-center">Mã Nạp Tiền</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center" style="width: 30%;"><img style="max-height: 50px;"
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center align-middle">MOMO</th>
+                                            <td class="text-center align-middle"><img
                                                 src="/assets_client/img/momo.png"></td>
-                                        <td class="text-center">0938428002</td>
-                                        <td class="text-center"><a @click="copyMa()" href="#"
-                                                class="text-primary"><b>@{{ ma }}</b></a></td>
-                                    </tr>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle">Số Điện Thoại</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">0366508231</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle">Nội Dung</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;"><a @click="copyMa()" href="#"
+                                                    class="text-primary"><b>@{{ ma }}</b></a></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-
                                 {{-- THE CAO  --}}
                                 <template v-if="select===2">
                                     <table class="table table-bordered">
-                                            <label class="form-label">Chọn Loại Thẻ</label>
-                                            <select name="type" id="type" class="form-control">
-                                                <option value="VIETTEL">VIETTEL</option>
-                                                <option value="VINAPHONE">VINAPHONE</option>
-                                                <option value="MOBIFONE">MOBIFONE</option>
-                                                <option value="ZING">ZING</option>
-                                                <option value="VNMOBI">VNMOBI</option>
-                                            </select>
-                                            <label class="form-label">Chọn Mệnh Giá Thẻ</label>
-                                            <select name="menhgia" id="menhgia" class="form-control">
-                                                <option value="10000">10.000</option>
-                                                <option value="20000">20.000</option>
-                                                <option value="30000">30.000</option>
-                                                <option value="50000">50.000</option>
-                                                <option value="100000">100.000</option>
-                                                <option value="200000">200.000</option>
-                                                <option value="300000">300.000</option>
-                                                <option value="500000">500.000</option>
-                                                <option value="1000000">1.000.000</option>
-                                            </select>
-                                            <label class="form-label">Nhập Số Seri Thẻ</label>
-                                            <input type="text" class="form-control" id="seri" placeholder="Nhập Số Seri Thẻ">
-                                            <label class="form-label">Nhập Mã Thẻ</label>
-                                            <input type="text" class="form-control" id="pin" placeholder="Nhập Số Mã Thẻ">
-                                            <button @click="napTheCao()" type="button" class="btn btn-success mt-3">Nạp Thẻ</button>
+                                        <label class="form-label">Chọn Loại Thẻ</label>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="VIETTEL">VIETTEL</option>
+                                            <option value="VINAPHONE">VINAPHONE</option>
+                                            <option value="MOBIFONE">MOBIFONE</option>
+                                            <option value="ZING">ZING</option>
+                                            <option value="VNMOBI">VNMOBI</option>
+                                        </select>
+                                        <label class="form-label">Chọn Mệnh Giá Thẻ</label>
+                                        <select name="menhgia" id="menhgia" class="form-control">
+                                            <option value="10000">10.000</option>
+                                            <option value="20000">20.000</option>
+                                            <option value="30000">30.000</option>
+                                            <option value="50000">50.000</option>
+                                            <option value="100000">100.000</option>
+                                            <option value="200000">200.000</option>
+                                            <option value="300000">300.000</option>
+                                            <option value="500000">500.000</option>
+                                            <option value="1000000">1.000.000</option>
+                                        </select>
+                                        <label class="form-label">Nhập Số Seri Thẻ</label>
+                                        <input type="text" class="form-control" id="seri"
+                                            placeholder="Nhập Số Seri Thẻ">
+                                        <label class="form-label">Nhập Mã Thẻ</label>
+                                        <input type="text" class="form-control" id="pin"
+                                            placeholder="Nhập Số Mã Thẻ">
+                                        <button @click="napTheCao()" type="button" class="btn btn-success mt-3">Nạp
+                                            Thẻ</button>
                                     </table>
                                 </template>
                             </div>
@@ -148,9 +154,81 @@
                             @click="copyMa()"><b>@{{ ma }}</b></a>
                         <br>
                         <p>Trong 1-5 Phút Sau Khi Chuyển Khoản Mà Vẫn Chưa Nhận Được Tiền Thì Liên Hệ</p><a
-                            href="https://www.facebook.com/binctp"> Ở Đây</a>
+                            href="https://www.facebook.com/binctp"> <b>Ở Đây</b></a>
+                        <div v-if="get===1">
+                            <img width="70" class="mx-auto"
+                                src="https://api.web2m.com/template/app-assets/images/loading/loading.gif" alt="">
+                            <p style="line-height: 3em">Đang chờ chuyển khoản</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-12">
+                <table v-if="view>767" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Hình Thức</th>
+                            <th scope="col">Tổng Nạp</th>
+                            <th scope="col">Tổng Nhận</th>
+                            <th scope="col">Trạng Thái</th>
+                            <th scope="col">Thời Gian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $key => $value)
+                            <tr>
+                                <th scope="row">{{ $key + 1 }}</th>
+                                <td>{{ $value->type }}</td>
+                                <td>{{ $value->total }}</td>
+                                <td>{{ $value->thucnhan }}</td>
+                                @if ($value->status == 0)
+                                    <td><button class="btn btn-warning btn-sm" type="button">Đang Kiểm Tra</button></td>
+                                @elseif ($value->status == 1)
+                                    <td><button class="btn btn-success btn-sm" type="button">Thành Công</button></td>
+                                @else
+                                    <td><button class="btn btn-danger btn-sm" type="button">Thất Bại</button></td>
+                                @endif
+                                <td>{{ $value->getThoiGian() }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <table v-else class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Hình Thức</th>
+                            <th scope="col">Tổng Nạp</th>
+                            <th scope="col">Tổng Nhận</th>
+                            <th scope="col">Trạng Thái</th>
+                            {{-- <th scope="col">Thời Gian</th> --}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $key => $value)
+                            <tr>
+                                <th scope="row">{{ $key + 1 }}</th>
+                                <td>{{ $value->type }}</td>
+                                <td>{{ $value->total }}</td>
+                                <td>{{ $value->thucnhan }}</td>
+                                @if ($value->status == 0)
+                                    <td><button class="btn btn-warning btn-sm" type="button">Đang Kiểm Tra</button></td>
+                                @elseif ($value->status == 1)
+                                    <td><button class="btn btn-success btn-sm" type="button">Thành Công</button></td>
+                                @else
+                                    <td><button class="btn btn-danger btn-sm" type="button">Thất Bại</button></td>
+                                @endif
+                                {{-- <td>{{$value->getThoiGian()}}</td> --}}
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {{ $data->links() }}
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
@@ -189,27 +267,28 @@
                 status: 'Lấy Thông Tin Chuyển Khoản',
                 get: 0,
                 select: 0,
-                ma: "BINCTP{{ Auth::guard('khach')->user()->username }}",
+                ma: "CTP{{ Auth::guard('khach')->user()->id }}",
+                view: window.innerWidth,
             },
             created() {
 
             },
             methods: {
-                napTheCao(){
+                napTheCao() {
                     var data = {
-                        'seri' : $("#seri").val() ? $("#seri").val() : null,
-                        'type' : $("#type").val() ? $("#type").val() : null,
-                        'menhgia' : $("#menhgia").val() ? $("#menhgia").val() : null,
-                        'pin' : $("#pin").val() ? $("#pin").val() : null,
+                        'seri': $("#seri").val() ? $("#seri").val() : null,
+                        'type': $("#type").val() ? $("#type").val() : null,
+                        'menhgia': $("#menhgia").val() ? $("#menhgia").val() : null,
+                        'pin': $("#pin").val() ? $("#pin").val() : null,
                     };
                     axios
                         .post('/autoTheCao', data)
                         .then((res) => {
-                         if(res.data.status){
-                            toastr.success(res.data.message);
-                        } else {
-                            toastr.error(res.data.message);
-                        }
+                            if (res.data.status) {
+                                toastr.success(res.data.message);
+                            } else {
+                                toastr.error(res.data.message);
+                            }
                         })
                         .catch((res) => {
                             $.each(res.response.data.errors, function(k, v) {
@@ -223,7 +302,7 @@
                     setTimeout(() => {
                         this.get = 1;
                         toastr.success("Lấy Thông Tin Chuyển Khoản Thành Công");
-                    }, 3000);
+                    }, 1400);
                 },
                 copyMa() {
                     navigator.clipboard.writeText(this.ma)

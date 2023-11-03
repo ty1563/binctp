@@ -36,7 +36,7 @@
                     <li class="nav__item"><a href="/#sanPham" class="nav__link">Game Mod</a></li>
                     <li class="nav__item"><a href="/#accordion" class="nav__link">FAQ</a></li>
                     <li class="nav__item"><a href="/tin-tuc" class="nav__link">Tin Tức</a></li>
-                    <li class="nav__item"><a href="/naptien" class="nav__link">Nạp Thẻ</a></li>
+                    <li class="nav__item"><a href="/naptien" class="nav__link">Nạp Tiền</a></li>
                     <li class="nav__item"><a href="/info" class="nav__link">Thông Tin</a>
                     </li>
                     @if (!Auth::guard('khach')->check())

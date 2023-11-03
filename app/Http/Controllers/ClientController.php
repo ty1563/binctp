@@ -8,6 +8,7 @@ use App\Models\DanhGiaSanPham;
 use App\Models\DanhMuc;
 use App\Models\history;
 use App\Models\KhachHang;
+use App\Models\LichSuNapTien;
 use App\Models\Pack;
 use App\Models\SanPham;
 use Carbon\Carbon;
@@ -34,7 +35,8 @@ class ClientController extends Controller
     }
     public function naptien()
     {
-        return view('Client.naptien.index');
+        $data = LichSuNapTien::where("user_id",Auth::guard("khach")->user()->id)->orderBy('created_at','desc')->paginate(5);
+        return view('Client.naptien.index',compact('data'));
     }
     public function info()
     {

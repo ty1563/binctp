@@ -8,26 +8,41 @@ use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\ChuyenMucController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientSettingController;
+use App\Http\Controllers\CurlFacebookController;
 use App\Http\Controllers\DanhGiaSanPhamController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\LichSuController;
 use App\Http\Controllers\PackController;
+use App\Http\Controllers\PanelGameController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\ThongKeController;
 use App\Http\Controllers\ThongTinController;
 use App\Http\Controllers\TinTucController;
+use App\Models\PanelGame;
 use Illuminate\Support\Facades\Route;
+//API GAME
+Route::post("/game/api",[PanelGameController::class,'api']);
 
-Route::get('/mbbank', [ApiConTroller::class, 'mbbank']);
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/login', [AdminController::class, 'login']);
     Route::post('/login-admin-check', [AdminController::class, 'checkLogin']);
     Route::get('/logout', [AdminController::class, 'loggout']);
 });
 Route::group(['prefix' => '/admin', 'middleware' => ['adminCheck']], function () {
+    Route::group(['prefix' => '/panel-game'], function () {
+        Route::get("/", [PanelGameController::class, 'index']);
+        Route::post("/add", [PanelGameController::class, 'add']);
+        Route::post("/load-setting", [PanelGameController::class, 'loadSetting']);
+        Route::post("/updateSetting", [PanelGameController::class, 'updateSetting']);
+        Route::post("/data", [PanelGameController::class, 'data']);
+        Route::post("/update", [PanelGameController::class, 'update']);
+        Route::post("/delete/{id}", [PanelGameController::class, 'delete']);
+        Route::post("/MultiDelete", [PanelGameController::class, 'MultiDelete']);
+        Route::post("/deleteAll", [PanelGameController::class, 'deleteAll']);
+    });
     Route::group(['prefix' => '/thong-tin'], function () {
         Route::get("/", [ThongTinController::class, 'index']);
         Route::post("/capNhat", [ThongTinController::class, 'capNhat']);
@@ -130,9 +145,13 @@ Route::get("/recover",[AccountController::class,'recover']);
 // Nạp Tiền
 Route::get('/naptien', [ClientController::class, 'naptien'])->middleware('khachCheck');
 Route::post('/autoTheCao',[ApiConTroller::class,'autoTheCao'])->middleware('khachCheck');
-Route::get('/autoMB',[ApiConTroller::class,'autoMB']);
+Route::get('/autoBank',[ApiConTroller::class,'autoBank'])->name('autoBank');
 Route::get('/autoCongTien',[ApiConTroller::class,'autoCongTien']);
 Route::get('/callback-thecao', [CallbackController::class,'callBackTheCao'])->name('thecao');
+
+//Curl
+// Route::post("/curl-share",[CurlFacebookController::class,'curlShare'])->name('curl-share');
+// Route::get("/curl-share",[CurlFacebookController::class,'index']);
 
 
 Route::post("/checkout/tiktok", [ClientController::class, 'checkout_tiktok']);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PanelGameController;
 use App\Models\ChuyenMuc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;

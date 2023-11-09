@@ -57,7 +57,11 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
-
+        'nganHang' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/nganHang.log'),
+            'level' => 'info',
+        ],
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

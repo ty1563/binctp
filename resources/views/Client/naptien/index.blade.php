@@ -75,7 +75,11 @@
                                                 src="/assets_client/img/mb.png"></td>
                                         </tr>
                                         <tr>
-                                            <th class="text-center align-middle">Chủ Tài Khoản</th>
+                                            <th class="text-center align-middle">STK</th>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">0366508231</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center align-middle">Tên TK</th>
                                             <td class="text-center align-middle" style="width: 60%;height: 50px;">NGUYEN VAN TY</td>
                                         </tr>
                                         <tr>

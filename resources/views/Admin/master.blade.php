@@ -109,22 +109,6 @@
                     </span>
                     <h3>Thống Kê</h3>
                 </a>
-                @if (in_array('quyen_khach_hang', $quyenArr) || $isMaster)
-                    <a href="/admin/khach-hang" class="menu-link">
-                        <span class="material-icons-sharp">
-                            person_outline
-                        </span>
-                        <h3>Khách Hàng</h3>
-                    </a>
-                @endif
-                @if (in_array('quyen_lich_su', $quyenArr) || $isMaster)
-                    <a href="/admin/lichsu" class="menu-link">
-                        <span class="material-icons-sharp">
-                            receipt_long
-                        </span>
-                        <h3>Lịch Sử</h3>
-                    </a>
-                @endif
                 @if (in_array('quyen_chuyen_muc', $quyenArr) || $isMaster)
                     <a href="/admin/chuyen-muc/" class="menu-link">
                         <span class="material-icons-sharp">
@@ -140,6 +124,22 @@
                             receipt_long
                         </span>
                         <h3>Danh Mục</h3>
+                    </a>
+                @endif
+                @if (in_array('quyen_khach_hang', $quyenArr) || $isMaster)
+                    <a href="/admin/khach-hang" class="menu-link">
+                        <span class="material-icons-sharp">
+                            person_outline
+                        </span>
+                        <h3>Khách Hàng</h3>
+                    </a>
+                @endif
+                @if (in_array('quyen_lich_su', $quyenArr) || $isMaster)
+                    <a href="/admin/lichsu" class="menu-link">
+                        <span class="material-icons-sharp">
+                            receipt_long
+                        </span>
+                        <h3>Lịch Sử</h3>
                     </a>
                 @endif
 
@@ -202,7 +202,13 @@
                 @endif
 
                 @if (Auth::guard('admin')->check())
-                    <a href="/admin/logout" class="menu-link">
+                <a href="/admin/panel-game" class="menu-link">
+                    <span class="material-symbols-outlined">
+                        stadia_controller
+                        </span>
+                    <h3>Game Panel</h3>
+                </a>
+                    <a style="color: red;" href="/admin/logout" class="menu-link">
                         <span class="material-icons-sharp">
                             logout
                         </span>

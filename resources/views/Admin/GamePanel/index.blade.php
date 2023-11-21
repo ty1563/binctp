@@ -17,11 +17,11 @@
                         </select>
                         <label>Thời Gian</label>
                         <select name="thoi_gian" class="form-control text-darkmod" required>
-                            <option value="0" active>2 Giờ</option>
-                            <option value="1">1 NGÀY</option>
-                            <option value="7">7 NGÀY</option>
-                            <option value="30">30 NGÀY</option>
-                            <option value="60">60 NGÀY</option>
+                            <option value="2" active>2 Giờ</option>
+                            <option value="24">1 NGÀY</option>
+                            <option value="168">7 NGÀY</option>
+                            <option value="720">30 NGÀY</option>
+                            <option value="1440">60 NGÀY</option>
                         </select>
                         <label>Số Thiết Bị</label>
                         <input type="number" value="1" class="form-control text-darkmod" name="max_devices" required>

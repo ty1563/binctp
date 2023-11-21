@@ -31,7 +31,6 @@ class CurlShareJob implements ShouldQueue
 
         if ($response->successful()) {
             $ds = $response->json();
-
             foreach ($ds['data'] as $data) {
                 $response = Http::get('https://graph.fb.me/' . $this->post_id . '/sharedposts', [
                     'access_token' => $data['access_token'],

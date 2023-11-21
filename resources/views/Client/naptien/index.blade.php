@@ -48,7 +48,7 @@
                                         Ngân Hàng
                                     </button>
                                 </th>
-                                <th class="text-center">
+                                {{-- <th class="text-center">
                                     <button @click="select=1"
                                         :class="{ 'btn': true, 'btn-outline-danger': select !== 1, 'btn-danger': select === 1 }">
                                         MOMO
@@ -59,7 +59,7 @@
                                         :class="{ 'btn': true, 'btn-outline-danger': select !== 2, 'btn-danger': select === 2 }">
                                         Thẻ Cào
                                     </button>
-                                </th>
+                                </th> --}}
                             </tr>
                         </div>
                         <div class="card-body">
@@ -72,15 +72,15 @@
                                         <tr>
                                             <th class="text-center align-middle" >Ngân Hàng</th>
                                             <td class="text-center align-middle" style="width: 60%;height: 20%;"><img
-                                                src="/assets_client/img/mb.png"></td>
+                                                src="/assets_client/img/saccombank.png"></td>
                                         </tr>
                                         <tr>
                                             <th class="text-center align-middle">STK</th>
-                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">0366508231</td>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">060154470452</td>
                                         </tr>
                                         <tr>
                                             <th class="text-center align-middle">Tên TK</th>
-                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">NGUYEN VAN TY</td>
+                                            <td class="text-center align-middle" style="width: 60%;height: 50px;">CHUNG TUAN PHAT</td>
                                         </tr>
                                         <tr>
                                             <th class="text-center align-middle">Nội Dung</th>
@@ -91,7 +91,7 @@
                                 </table>
 
                                 {{-- MOMO  --}}
-                                <table v-if="select===1" class="table table-bordered">
+                                {{-- <table v-if="select===1" class="table table-bordered">
                                     <tbody>
                                         <tr>
                                             <th class="text-center align-middle">MOMO</th>
@@ -108,9 +108,9 @@
                                                     class="text-primary"><b>@{{ ma }}</b></a></td>
                                         </tr>
                                     </tbody>
-                                </table>
+                                </table> --}}
                                 {{-- THE CAO  --}}
-                                <template v-if="select===2">
+                                {{-- <template v-if="select===2">
                                     <table class="table table-bordered">
                                         <label class="form-label">Chọn Loại Thẻ</label>
                                         <select name="type" id="type" class="form-control">
@@ -141,7 +141,7 @@
                                         <button @click="napTheCao()" type="button" class="btn btn-success mt-3">Nạp
                                             Thẻ</button>
                                     </table>
-                                </template>
+                                </template> --}}
                             </div>
                         </div>
                     </div>

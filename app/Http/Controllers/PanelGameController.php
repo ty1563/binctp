@@ -87,8 +87,16 @@ class PanelGameController extends Controller
     }
     public function updateSetting(Request $request){
         DB::table('custom_games')
-        ->where('ten_menu', $request->ten_menu)  // Điều kiện xác định bản ghi cần cập nhật
-        ->update($request->except('id'));
+        ->limit(1) // Giới hạn cập nhật chỉ một bản ghi
+        ->update([
+            'ten_menu' => $request->ten_menu,
+            'tinh_trang' => $request->tinh_trang,
+            'thong_bao' => $request->thong_bao,
+            'esp_status' => $request->esp_status,
+            'aimbot_status' => $request->aimbot_status,
+            'bullet_status' => $request->bullet_status,
+            'memory_status' => $request->memory_status
+        ]);
         return response()->json([
             'status' => true,
             'message'=>'Cập Nhật Thành Công',
@@ -140,6 +148,9 @@ class PanelGameController extends Controller
             'data' => $data,
         ]);
     }
+    function extractNumbers($input) {
+        return preg_replace('/[^0-9]/', '', $input);
+    }
     public function api(Request $request)
     {
         $data = CustomGame::first();
@@ -154,9 +165,11 @@ class PanelGameController extends Controller
                 'message' => 'Dữ Liệu Không Chính Xác',
             ]));
         }
+        $ngayHetHan = "";
         $userKey = $request->input('user_key');
         $devices = $request->input('serial');
         $game    = $request->input('game');
+        $session = $this->extractNumbers($devices);
         $check = PanelGame::where("user_key", $userKey)
             ->where("game", $game)
             ->first();
@@ -173,13 +186,14 @@ class PanelGameController extends Controller
                     'message' => 'Key Đã Bị Khóa',
                 ]));
             if ($check->ngay_het_han != null) {
-                $ngayHetHan = Carbon::parse($check->ngay_het_han, 'Asia/Ho_Chi_Minh');
-                if ($ngayHetHan->isPast()) {
+                $checkHetHan = Carbon::parse($check->ngay_het_han, 'Asia/Ho_Chi_Minh');
+                if ($checkHetHan->isPast()) {
                     return response()->json(collect([
                         'status' => false,
                         'message' => 'Key Đã Hết Hạn',
                     ]));
                 }
+                $ngayHetHan = $checkHetHan->format('Y-m-d H:i:s');
             }
             if ($check->status == 0) { // Chưa Login lần Nào
                 $check->devices = $devices;
@@ -192,6 +206,7 @@ class PanelGameController extends Controller
                     'message' => 'Đăng Nhập Thành Công',
                     'data' => $data,
                     'ngay_het_han' => $ngayHetHan,
+                    'session' => $session,
                 ]));
             } else { // Đã Login
                 $arrDevices = explode(',', $check->devices);
@@ -201,8 +216,9 @@ class PanelGameController extends Controller
                         'message' => 'Đăng Nhập Thành Công',
                         'data' => $data,
                         'ngay_het_han' => $ngayHetHan,
+                        'session' => $session,
                     ]));
-                } elseif ($check->max_devices != 0) {
+                } elseif ($check->max_devices > 0) {
                     $check->devices = $check->devices . ',' . $devices;
                     $check->status = 1;
                     $check->max_devices -= 1;
@@ -212,6 +228,7 @@ class PanelGameController extends Controller
                         'message' => 'Đăng Nhập Thành Công',
                         'data' => $data,
                         'ngay_het_han' => $ngayHetHan,
+                        'session' => $session,
                     ]));
                 }
                 if (count($arrDevices) >= $check->max_devices)

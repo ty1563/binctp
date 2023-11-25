@@ -51,6 +51,12 @@
                         class="fa fa-trash"></i>Xóa Mục Đã Chọn</button>
                 <button v-if="mulselect == 0" class="btn btn-danger" @click="mulselect =0;xoaAll()">Xóa Tất Cả</button>
             </div>
+            <nav class="navbar navbar-light bg-light">
+                <form class="form-inline" id="formSearch" v-on:submit.prevent="search()">
+                  <input class="form-control mr-sm-2" type="search" name="s" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              </nav>
             <table class="table">
                 <tr>
                     <td v-if="mulselect==1" class="text-center bold-text">Select</td>
@@ -222,6 +228,33 @@
                 this.loadSetting();
             },
             methods: {
+                search(){
+                    var paramObj = {};
+                    $.each($('#formSearch').serializeArray(), function(_, kv) {
+                        if (paramObj.hasOwnProperty(kv.name)) {
+                            paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+                            paramObj[kv.name].push(kv.value);
+                        } else {
+                            paramObj[kv.name] = kv.value;
+                        }
+                    });
+                    axios
+                        .post('/admin/panel-game/search', paramObj)
+                        .then((res) => {
+                         if(res.data.status){
+                            toastr.success(res.data.message);
+                            this.listKey = res.data.data.data;
+                            this.pagination = res.data.data;
+                        } else {
+                            toastr.error(res.data.message);
+                        }
+                        })
+                        .catch((res) => {
+                            $.each(res.response.data.errors, function(k, v) {
+                                toastr.error(v[0]);
+                            });
+                        });
+                },
                 updateSetting() {
                     var data = {
                         "ten_menu" : this.ten_menu,

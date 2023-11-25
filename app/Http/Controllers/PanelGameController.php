@@ -85,21 +85,22 @@ class PanelGameController extends Controller
             'data' => $data,
         ]);
     }
-    public function updateSetting(Request $request){
+    public function updateSetting(Request $request)
+    {
         DB::table('custom_games')
-        ->limit(1) // Giới hạn cập nhật chỉ một bản ghi
-        ->update([
-            'ten_menu' => $request->ten_menu,
-            'tinh_trang' => $request->tinh_trang,
-            'thong_bao' => $request->thong_bao,
-            'esp_status' => $request->esp_status,
-            'aimbot_status' => $request->aimbot_status,
-            'bullet_status' => $request->bullet_status,
-            'memory_status' => $request->memory_status
-        ]);
+            ->limit(1) // Giới hạn cập nhật chỉ một bản ghi
+            ->update([
+                'ten_menu' => $request->ten_menu,
+                'tinh_trang' => $request->tinh_trang,
+                'thong_bao' => $request->thong_bao,
+                'esp_status' => $request->esp_status,
+                'aimbot_status' => $request->aimbot_status,
+                'bullet_status' => $request->bullet_status,
+                'memory_status' => $request->memory_status
+            ]);
         return response()->json([
             'status' => true,
-            'message'=>'Cập Nhật Thành Công',
+            'message' => 'Cập Nhật Thành Công',
         ]);
     }
     public function add(PanelGameCreateRequest $request)
@@ -148,7 +149,28 @@ class PanelGameController extends Controller
             'data' => $data,
         ]);
     }
-    function extractNumbers($input) {
+    public function search(Request $request)
+    {
+        $search = PanelGame::where("user_key", "like", "%" . $request->s . "%")->paginate(10);
+        if ($request->s === null)
+            return response()->json([
+                'status' => true,
+                'data' => $search,
+                'message' => "Vui Lòng Dán Key Trước Khi Tìm Kiếm",
+            ]);
+        if (empty($search))
+            return response()->json([
+                'status' => false,
+                'message' => 'Không Tìm Thấy',
+            ]);
+        return response()->json([
+            'status' => true,
+            'data' => $search,
+            'message' => count($search) . " Kết Quả Được Tìm Thấy",
+        ]);
+    }
+    function extractNumbers($input)
+    {
         return preg_replace('/[^0-9]/', '', $input);
     }
     public function api(Request $request)
@@ -158,11 +180,18 @@ class PanelGameController extends Controller
             'user_key' => 'required',
             'serial' => 'required',
             'game' => 'required',
+            'web' => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(collect([
                 'status' => false,
-                'message' => 'Dữ Liệu Không Chính Xác',
+                'message' => 'Fuckyou',
+            ]));
+        }
+        if (!strstr($request->input("web"), "binctp")) {
+            return response()->json(collect([
+                'status' => false,
+                'message' => 'Sever',
             ]));
         }
         $ngayHetHan = "";
@@ -176,7 +205,7 @@ class PanelGameController extends Controller
         if (!$check) {
             return response()->json(collect([
                 'status' => false,
-                'message' => "Key Sai!",
+                'message' => "incorrect",
             ]));
         }
         try {
@@ -190,7 +219,7 @@ class PanelGameController extends Controller
                 if ($checkHetHan->isPast()) {
                     return response()->json(collect([
                         'status' => false,
-                        'message' => 'Key Đã Hết Hạn',
+                        'message' => 'Key expired',
                     ]));
                 }
                 $ngayHetHan = $checkHetHan->format('Y-m-d H:i:s');
@@ -203,7 +232,7 @@ class PanelGameController extends Controller
                 $check->save();
                 return response()->json(collect([
                     'status' => true,
-                    'message' => 'Đăng Nhập Thành Công',
+                    'message' => 'Login Success',
                     'data' => $data,
                     'ngay_het_han' => $ngayHetHan,
                     'session' => $session,
@@ -213,7 +242,7 @@ class PanelGameController extends Controller
                 if (in_array($devices, $arrDevices)) {
                     return response()->json(collect([
                         'status' => true,
-                        'message' => 'Đăng Nhập Thành Công',
+                        'message' => 'Login Success',
                         'data' => $data,
                         'ngay_het_han' => $ngayHetHan,
                         'session' => $session,
@@ -225,7 +254,7 @@ class PanelGameController extends Controller
                     $check->save();
                     return response()->json(collect([
                         'status' => true,
-                        'message' => 'Đăng Nhập Thành Công',
+                        'message' => 'Login Success',
                         'data' => $data,
                         'ngay_het_han' => $ngayHetHan,
                         'session' => $session,
@@ -234,13 +263,13 @@ class PanelGameController extends Controller
                 if (count($arrDevices) >= $check->max_devices)
                     return response()->json([
                         'status' => false,
-                        'message' => 'Key Đã Được Đăng Nhập Trên Thiết Bị Khác',
+                        'message' => 'Max Devices',
                     ]);
             }
         } catch (\Throwable $th) {
             return response()->json(collect([
                 'status' => false,
-                'message' => "Đã Sãy Ra Lỗi",
+                'message' => "Connect Fail",
             ]));
         }
     }

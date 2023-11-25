@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string("ten_chuyen_muc");
             $table->string("slug_chuyen_muc");
             $table->string("status");
+            $table->string("loai");
+            $table->string("logo");
             $table->timestamps();
         });
     }

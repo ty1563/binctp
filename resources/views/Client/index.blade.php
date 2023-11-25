@@ -318,14 +318,11 @@
             ->select('chuyen_mucs.*', 'client_settings.*')
             ->orderBy('client_settings.page', 'asc')
             ->get();
-        $listGame = \App\Models\DanhMuc::join('san_phams', 'danh_mucs.id', 'san_phams.id_danh_muc')
-            ->join('chuyen_mucs', 'danh_mucs.id_chuyen_muc', 'chuyen_mucs.id')
-            ->join('packs', 'san_phams.id', 'packs.id_san_pham')
-            ->where('packs.loai', 'key')
-            ->where('san_phams.status', '1')
-            ->select('danh_mucs.*', 'chuyen_mucs.*')
+        $listGame = \App\Models\ChuyenMuc::leftJoin('danh_mucs', 'danh_mucs.id_chuyen_muc', 'chuyen_mucs.id')
+            ->where('chuyen_mucs.loai', 'game')
+            ->orderBy('chuyen_mucs.id')
+            ->select('danh_mucs.mo_ta', 'chuyen_mucs.*')
             ->distinct()
-            ->orderBy('danh_mucs.xep_hang', 'asc')
             ->get();
         $cau_hoi = \App\Models\CauHoi::get();
         $count_cau_hoi = count($cau_hoi);
@@ -432,7 +429,7 @@
             @foreach ($listGame as $value)
                 @if ($value->status)
                     <div class="accessory__content">
-                        <img src="{{ $value->hinh_anh }}" alt="" class="accessory__img">
+                        <img src="{{ $value->logo }}" alt="" class="accessory__img">
                         <h3 class="accessory__title">{{ $value->ten_chuyen_muc }}</h3>
                         <span class="accessory__category">{{ $value->mo_ta }}</span>
                         <button class="button-85" role="button"

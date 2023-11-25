@@ -14,5 +14,7 @@ class ChuyenMuc extends Model
         'ten_chuyen_muc',
         'slug_chuyen_muc',
         'status',
+        'loai',
+        'logo',
     ];
 }

@@ -10,6 +10,22 @@
                 <div>
                     <label class="form-label">Tên Chuyên Mục</label>
                     <input class="form-control" type="text" name="ten_chuyen_muc" v-model="ten_chuyen_muc">
+                    <label class="form-label">Loại</label>
+                    <select class="form-control" name="loai" id="loai">
+                        <option value="game">Game</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="khac">Khác</option>
+                    </select>
+                    <label>Logo</label>
+                    <div class="input-group">
+                        <input id="logo" class="form-control" type="text" name="logo"
+                            placeholder="Tải Lên Hình Ảnh">
+                        <span class="input-group-prepend">
+                            <a id="lfm" data-input="logo" data-preview="holder" class="btn btn-primary">
+                                <i class="fa fa-picture-o"></i> Chọn Ảnh
+                            </a>
+                        </span>
+                    </div>
                     <label class="form-label">Tình Trạng</label>
                     <select class="form-control text-darkmod" name="status">
                         <option value="1" class="active">Mở</option>
@@ -145,7 +161,7 @@
                 xoa(id) {
                     if (confirm(
                             "Xóa Mục Này Sẽ Xóa Hết Tất Cả Các Danh Mục, Sản Phẩm Liên Quan . Bạn Chắc Chắn Muốn Xóa?"
-                            )) {
+                        )) {
                         axios
                             .post('/admin/chuyen-muc/delete/' + id, id)
                             .then((res) => {
@@ -164,6 +180,18 @@
                     }
                 }
             },
+        });
+    </script>
+    <script>
+        var route_prefix = "/laravel-filemanager";
+    </script>
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+    <script>
+        $("#lfm").filemanager('image', {
+            prefix: route_prefix
+        });
+        $("#lfm_edit").filemanager('image', {
+            prefix: route_prefix
         });
     </script>
 @endsection

@@ -39,6 +39,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['adminCheck']], function ()
         Route::post("/updateSetting", [PanelGameController::class, 'updateSetting']);
         Route::post("/data", [PanelGameController::class, 'data']);
         Route::post("/update", [PanelGameController::class, 'update']);
+        Route::post("/search", [PanelGameController::class, 'search']);
         Route::post("/delete/{id}", [PanelGameController::class, 'delete']);
         Route::post("/MultiDelete", [PanelGameController::class, 'MultiDelete']);
         Route::post("/deleteAll", [PanelGameController::class, 'deleteAll']);

@@ -2,7 +2,7 @@
 @section('noi_dung')
     <div class="row" id="app">
         <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div  v-if="ss==0" class="col-sm-8">
             <form id="formdata" v-on:submit.prevent="add()">
                 <div>
                     <div class="text-center">
@@ -29,7 +29,46 @@
                         <input type="number" value="1" class="form-control text-darkmod" name="number" required>
                     </div>
                     <div class="text-end mt-1">
+                        <button type="button" class="btn btn-warning" @click="ss === 1 ? (ss = 0, s = 'Cấu Hình Bypass') : (ss = 1, s = 'Tạo Mới Key')">
+                            <i class="fa fa-retweet" aria-hidden="true"></i>@{{s}}
+                        </button>
                         <button type="submit" class="btn btn-success">Tạo Mới</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {{-- bypass  --}}
+        <div v-if="ss==1" class="col-sm-8">
+            <form id="formBypass" v-on:submit.prevent="updateBypass()">
+                <div>
+                    <div class="text-center">
+                        <h5>Cấu Hình Bypass</h5>
+                    </div>
+                    <div>
+                        <div class="row" v-for="k in index">
+                            <div class="col-sm-4">
+                                <label class="form-label">Lib Name @{{k}}</label>
+                                <input type="text" class="form-control" :name="'lib_name' + k" placeholder="ex : libanogs.so" >
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label">Offset @{{k}}</label>
+                                <input type="text" class="form-control" :name="'offset' + k" placeholder="ex : 0x*****" >
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label">Patch @{{k}}</label>
+                                <input type="text" class="form-control" :name="'patch' + k" placeholder="ex : 00 00 00 00" >
+                            </div>
+                        </div>
+                        <div class="div text-center mt-3">
+                            <button class="btn btn-danger" type="button" @click="index<1? index=0 : index-=1">-</button>
+                            <button class="btn btn-success" type="button" @click="index+=1">+</button>
+                        </div>
+                    </div>
+                    <div class="text-end mt-1">
+                        <button type="button" class="btn btn-warning" @click="ss === 1 ? (ss = 0, s = 'Cấu Hình Bypass') : (ss = 1, s = 'Tạo Mới Key')">
+                            <i class="fa fa-retweet" aria-hidden="true"></i>@{{s}}
+                        </button>
+                        <button type="submit" class="btn btn-success">Thêm Mới Bypass</button>
                     </div>
                 </div>
             </form>
@@ -41,7 +80,28 @@
             <textarea :value="keyDaTao" cols="40" rows="5" class="text-darkmod"></textarea>
         </div>
         <div class="col-sm-2"></div>
-        <div class="col-sm-12 mt-4">
+        {{-- list Bypass  --}}
+        <div class="col-sm-12 mt-4" v-if="ss==1">
+            <table class="table">
+                <tr>
+                    <td class="text-center bold-text">Lib Name</td>
+                    <td class="text-center bold-text">Offset</td>
+                    <td class="text-center bold-text">Patch</td>
+                    <td class="text-center bold-text">Action</td>
+                </tr>
+                <tr v-for="(v,k) in listBypass">
+                    <td class="text-center">@{{ v.lib_name }}</td>
+                    <td class="text-center">@{{ v.offset }}</td>
+                    <td class="text-center">@{{ v.patch }}</td>
+                    <td class="text-center">
+                        <button v-on:click="deleteBypass(v.id)" class="btn btn-danger">Xóa Bỏ</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        {{-- list Key  --}}
+        <div class="col-sm-12 mt-4" v-if="ss==0">
             <button type="button" class="btn btn-success mb-1" data-bs-toggle="modal" data-bs-target="#cauHinh"><i
                     class="fa fa-bars"></i> Cấu Hình Menu Game</button>
             <div v-if="view>767">
@@ -139,6 +199,8 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- Cau Hinh  --}}
                 <div class="modal fade" id="cauHinh" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
@@ -222,12 +284,59 @@
                 aimbot_status: null,
                 bullet_status: null,
                 memory_status: null,
+                index : 1,
+                ss : 0,
+                listBypass : [],
+                s : "Cấu Hình Bypass",
             },
             created() {
                 this.load(1);
                 this.loadSetting();
             },
             methods: {
+                deleteBypass(id){
+                    axios
+                        .post('/admin/panel-game/deleteBypass/'+id, id)
+                        .then((res) => {
+                         if(res.data.status){
+                            toastr.success(res.data.message);
+                            this.listBypass = res.data.bypass;
+                        } else {
+                            toastr.error(res.data.message);
+                        }
+                        })
+                        .catch((res) => {
+                            $.each(res.response.data.errors, function(k, v) {
+                                toastr.error(v[0]);
+                            });
+                        });
+                },
+                updateBypass(){
+                    var paramObj = {};
+                    $.each($('#formBypass').serializeArray(), function(_, kv) {
+                        if (paramObj.hasOwnProperty(kv.name)) {
+                            paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+                            paramObj[kv.name].push(kv.value);
+                        } else {
+                            paramObj[kv.name] = kv.value;
+                        }
+                    });
+                    axios
+                        .post('/admin/panel-game/updateBypass', paramObj)
+                        .then((res) => {
+                         if(res.data.status){
+                            this.listBypass = res.data.bypass;
+                            toastr.success(res.data.message);
+                        } else {
+                            toastr.error(res.data.message);
+                        }
+                        })
+                        .catch((res) => {
+                            $.each(res.response.data.errors, function(k, v) {
+                                toastr.error(v[0]);
+                            });
+                        });
+                },
                 search(){
                     var paramObj = {};
                     $.each($('#formSearch').serializeArray(), function(_, kv) {
@@ -292,6 +401,7 @@
                                 this.aimbot_status = res.data.data.aimbot_status;
                                 this.bullet_status = res.data.data.bullet_status;
                                 this.memory_status = res.data.data.memory_status;
+                                this.listBypass = res.data.bypass;
                             }
                         })
                         .catch((res) => {

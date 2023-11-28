@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PanelGameCreateRequest;
+use App\Models\BypassGame;
 use App\Models\CustomGame;
 use App\Models\PanelGame;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\TryCatch;
 
 use function PHPUnit\Framework\isNull;
 
@@ -61,6 +64,22 @@ class PanelGameController extends Controller
             ]);
         }
     }
+    public function deleteBypass($id){
+        $check = BypassGame::find($id);
+        try {
+            $check->delete();
+            return response()->json([
+                'status' => true,
+                'message'=>'Xóa Thành Công',
+                'bypass' => BypassGame::get(),
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message'=>'Xóa Thất Bại',
+            ]);
+        }
+    }
     public function update(Request $request)
     {
         $check = PanelGame::find($request->id);
@@ -79,16 +98,56 @@ class PanelGameController extends Controller
     }
     public function loadSetting()
     {
+        $bypass = BypassGame::get();
         $data = CustomGame::first();
         return response()->json([
             'status' => true,
             'data' => $data,
+            'bypass'=> $bypass,
         ]);
+    }
+
+    public function updateBypass(Request $request)
+    {
+        $data = $request->all();
+        $count = count($data) / 3;
+        $totalAdd = 0;
+        for ($i = 1; $i < $count + 1; $i++) {
+            // Chuyển Thành Dạng 00 00 00 00
+            $xoaSpace = str_replace(" ", "", $request['patch' . $i]);
+            $themDauCach = str_split($xoaSpace, 2);
+            $convertHex = implode(" ", $themDauCach);
+
+            $libNameKey = $request['lib_name' . $i];
+            $offsetKey = $request['offset'].$i;
+            $patchKey = $convertHex;
+            if (!empty($libNameKey) && !empty($offsetKey) && !empty($patchKey)) {
+                BypassGame::create([
+                    'lib_name' => $libNameKey,
+                    'offset' => $offsetKey,
+                    'patch' => $convertHex,
+                ]);
+                $totalAdd += 1;
+            }
+        }
+        if($totalAdd>0){
+            $listBypass = BypassGame::get();
+            return response()->json([
+                'status' => true,
+                'message'=>'Cập Nhật Thành Công',
+                'bypass' => $listBypass,
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message'=>'Cập Nhật Thất Bại',
+            ]);
+        }
     }
     public function updateSetting(Request $request)
     {
         DB::table('custom_games')
-            ->limit(1) // Giới hạn cập nhật chỉ một bản ghi
+            ->limit(1)
             ->update([
                 'ten_menu' => $request->ten_menu,
                 'tinh_trang' => $request->tinh_trang,

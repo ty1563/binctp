@@ -25,6 +25,14 @@ use App\Models\PanelGame;
 use Illuminate\Support\Facades\Route;
 //API GAME
 Route::post("/game/api",[PanelGameController::class,'api']);
+Route::get("/game/api",function(){
+    return response()->json([
+        'Telegram' => 'T.me/SoiShipperYT',
+        'Zalo'=>'zalo.me/0366508231',
+        'Phone Number'=>'0366508231',
+    ]);
+});
+
 
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/login', [AdminController::class, 'login']);
@@ -37,10 +45,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['adminCheck']], function ()
         Route::post("/add", [PanelGameController::class, 'add']);
         Route::post("/load-setting", [PanelGameController::class, 'loadSetting']);
         Route::post("/updateSetting", [PanelGameController::class, 'updateSetting']);
+        Route::post("/updateBypass", [PanelGameController::class, 'updateBypass']);
         Route::post("/data", [PanelGameController::class, 'data']);
         Route::post("/update", [PanelGameController::class, 'update']);
         Route::post("/search", [PanelGameController::class, 'search']);
         Route::post("/delete/{id}", [PanelGameController::class, 'delete']);
+        Route::post("/deleteBypass/{id}", [PanelGameController::class, 'deleteBypass']);
         Route::post("/MultiDelete", [PanelGameController::class, 'MultiDelete']);
         Route::post("/deleteAll", [PanelGameController::class, 'deleteAll']);
     });

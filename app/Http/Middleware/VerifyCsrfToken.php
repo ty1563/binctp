@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/game/api',
+        '/game/api/get-status',
     ];
 }

@@ -144,8 +144,47 @@ class PanelGameController extends Controller
             ]);
         }
     }
+    public function status(Request $request){
+        $validator = Validator::make($request->all(), [
+            'web' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(collect([
+                'status' => false,
+                'message' => 'error',
+            ]));
+        }
+        $web = $request->input('web');
+        if($web!='binctp')
+            return response()->json([
+                'status' => false,
+                'message'=>'Thất Bại',
+            ]);
+        $data = DB::table('custom_games')
+        ->limit(1)
+        ->get("tinh_trang");
+        if($data[0]->tinh_trang=="1"){
+            $Bypass = BypassGame::get();
+            return response()->json(collect([
+                'status' => true,
+                'data' => $Bypass,
+                'message' => 'Hoạt Động',
+            ]));
+        }else{
+            return response()->json(collect([
+                'status' => true,
+                'message' => 'Bảo Trì',
+            ]));
+        }
+    }
     public function updateSetting(Request $request)
     {
+        if(Auth::guard("admin")->user()->id_quyen != "is_master"){
+            return response()->json([
+                'status' => false,
+                'message'=>"Chỉ Admin Mới Được Quyền Này",
+            ]);
+        }
         DB::table('custom_games')
             ->limit(1)
             ->update([
@@ -306,7 +345,8 @@ class PanelGameController extends Controller
                         'ngay_het_han' => $ngayHetHan,
                         'session' => $session,
                     ]));
-                } elseif ($check->max_devices > 0) {
+                }
+                if (!in_array($devices, $arrDevices) && $check->max_devices > 0) {
                     $check->devices = $check->devices . ',' . $devices;
                     $check->status = 1;
                     $check->max_devices -= 1;

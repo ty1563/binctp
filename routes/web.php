@@ -8,6 +8,7 @@ use App\Http\Controllers\CauHoiController;
 use App\Http\Controllers\ChuyenMucController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientSettingController;
+use App\Http\Controllers\CoinMasterController;
 use App\Http\Controllers\CurlFacebookController;
 use App\Http\Controllers\DanhGiaSanPhamController;
 use App\Http\Controllers\DanhMucController;
@@ -25,6 +26,7 @@ use App\Models\PanelGame;
 use Illuminate\Support\Facades\Route;
 //API GAME
 Route::post("/game/api",[PanelGameController::class,'api']);
+Route::post("/game/api/get-status",[PanelGameController::class,'status']);
 Route::get("/game/api",function(){
     return response()->json([
         'Telegram' => 'T.me/SoiShipperYT',
@@ -32,6 +34,8 @@ Route::get("/game/api",function(){
         'Phone Number'=>'0366508231',
     ]);
 });
+
+//CM
 
 
 Route::group(['prefix' => '/admin'], function () {
@@ -53,6 +57,12 @@ Route::group(['prefix' => '/admin', 'middleware' => ['adminCheck']], function ()
         Route::post("/deleteBypass/{id}", [PanelGameController::class, 'deleteBypass']);
         Route::post("/MultiDelete", [PanelGameController::class, 'MultiDelete']);
         Route::post("/deleteAll", [PanelGameController::class, 'deleteAll']);
+    });
+    Route::group(['prefix' => '/cmspin'], function () {
+        Route::get("/", [CoinMasterController::class, 'index']);
+        Route::post("/add", [CoinMasterController::class, 'run']);
+        Route::post("/data", [CoinMasterController::class, 'data']);
+        Route::post("/delete/{id}", [CoinMasterController::class, 'delete']);
     });
     Route::group(['prefix' => '/thong-tin'], function () {
         Route::get("/", [ThongTinController::class, 'index']);

@@ -128,25 +128,28 @@
                     <td v-if="mulselect==0" class="text-center bold-text">Action</td>
                 </tr>
                 <tr v-if="view>767" v-for="(v,k) in listKey">
-                    <td class="text-center" v-if="mulselect ==1">
-                        <input type="checkbox" v-model="selectedItems" :value="v.id">
-                    </td>
-                    <td class="text-center">@{{ v.nguoi_tao }}</td>
-                    <td class="text-center" v-on:click="copyMa(v.user_key)"><b
-                            class="text-primary">@{{ v.user_key }}</b></td>
-                    <td class="text-center">@{{ v.game }}</td>
-                    <td class="text-center">@{{ v.thoi_gian + ' Giờ' }}</td>
-                    <td class="text-center">@{{ v.status == 0 ? 'Chưa Kích Hoạt' : 'Đã Kích Hoạt' }}</td>
-                    <td class="text-center" v-if="mulselect==0">
-                        <button v-on:click="edit = v" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#infoo">
-                            Cập Nhật
-                        </button>
-                        <button v-on:click="xoa(v.id)" class="btn btn-danger">Xóa Bỏ</button>
-                    </td>
+                    <template v-if="v.nguoi_tao == '{{ Auth::guard('admin')->user()->username}}'">
+                        <td class="text-center" v-if="mulselect ==1">
+                            <input type="checkbox" v-model="selectedItems" :value="v.id">
+                        </td>
+                        <td class="text-center">@{{ v.nguoi_tao }}</td>
+                        <td class="text-center" v-on:click="copyMa(v.user_key)"><b
+                                class="text-primary">@{{ v.user_key }}</b></td>
+                        <td class="text-center">@{{ v.game }}</td>
+                        <td class="text-center">@{{ v.thoi_gian + ' Giờ' }}</td>
+                        <td class="text-center">@{{ v.status == 0 ? 'Chưa Kích Hoạt' : 'Đã Kích Hoạt' }}</td>
+                        <td class="text-center" v-if="mulselect==0">
+                            <button v-on:click="edit = v" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#infoo">
+                                Cập Nhật
+                            </button>
+                            <button v-on:click="xoa(v.id)" class="btn btn-danger">Xóa Bỏ</button>
+                        </td>
+                    </template>
                 </tr>
                 <tr v-if="view<767" v-for="(v,k) in listKey" v-on:click="edit = v" data-bs-toggle="modal"
                     data-bs-target="#infoo">
+                    <template v-if="v.nguoi_tao == '{{ Auth::guard('admin')->user()->username}}'">
                     <td class="text-center" v-if="mulselect ==1">
                         <input type="checkbox" v-model="selectedItems" :value="v.id">
                     </td>
@@ -156,6 +159,7 @@
                     <td class="text-center">@{{ v.game }}</td>
                     <td class="text-center">@{{ v.thoi_gian + ' Giờ' }}</td>
                     <td class="text-center">@{{ v.status == 0 ? 'Chưa Kích Hoạt' : 'Đã Kích Hoạt' }}</td>
+                    </template>
                 </tr>
                 <div class="modal fade" id="infoo" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">

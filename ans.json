@@ -19,47 +19,47 @@
         "BEST PROJECT EVER"
     ],
     "payloadServer": [
-    {
-      "id": "vqzuejeiiemf1",
-      "status": 0
-    },
-    {
-      "id": "weajonqbsyvr2",
-      "status": 0
-    },
-    {
-      "id": "oraiuhooppds3",
-      "status": 0
-    },
-    {
-      "id": "mwmyjxhwhvkd4",
-      "status": 0
-    },
-    {
-      "id": "agujrczbhepn5",
-      "status": 0
-    },
-    {
-      "id": "iqwuumqkuczb6",
-      "status": 0
-    },
-    {
-      "id": "zseniuazehyf7",
-      "status": 1
-    },
-    {
-      "id": "bmyrrpbvnlaa8",
-      "status": 1
-    },
-    {
-      "id": "hpwsqafwqdqr9",
-      "status": 1
-    },
-    {
-      "id": "enmobnpmpxkw10",
-      "status": 1
-    }
-  ],
+        {
+            "id": "vqzuejeiiemf1",
+            "status": 0
+        },
+        {
+            "id": "weajonqbsyvr2",
+            "status": 0
+        },
+        {
+            "id": "oraiuhooppds3",
+            "status": 0
+        },
+        {
+            "id": "mwmyjxhwhvkd4",
+            "status": 0
+        },
+        {
+            "id": "agujrczbhepn5",
+            "status": 0
+        },
+        {
+            "id": "iqwuumqkuczb6",
+            "status": 0
+        },
+        {
+            "id": "zseniuazehyf7",
+            "status": 1
+        },
+        {
+            "id": "bmyrrpbvnlaa8",
+            "status": 1
+        },
+        {
+            "id": "hpwsqafwqdqr9",
+            "status": 1
+        },
+        {
+            "id": "enmobnpmpxkw10",
+            "status": 1
+        }
+    ],
     "blum1": [
         "Blum - Big City Life"
     ],
@@ -70,10 +70,10 @@
         "choice_4": 8
     },
     "seed": {
-        "epic": [10,10.5],
-        "rare": [2.8,3],
-        "uncommon": [0.7,0.85],
-        "common": [0.3,0.4]
+        "epic": [10, 10.5],
+        "rare": [2.8, 3],
+        "uncommon": [0.7, 0.85],
+        "common": [0.3, 0.4]
     },
     "exp": 17
 }

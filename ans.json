@@ -68,10 +68,10 @@
         "Blum - Big City Life"
     ],
     "notpixel": {
-        "x": [889,904],
-        "y": [887,902],
-        "template_id": 6175284714,
-        "color":"#6D001A"
+        "x": [169,184],
+        "y": [281,295],
+        "template_id": 6506872783,
+        "color":"#BF4300"
     },
     "seed": {
         "epic": [9.5, 10],

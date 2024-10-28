@@ -67,11 +67,10 @@
     "blum1": [
         "Blum - Big City Life"
     ],
-    "major": {
-        "choice_1": 1,
-        "choice_2": 2,
-        "choice_3": 3,
-        "choice_4": 8
+    "notpixel": {
+        "x": [889,904],
+        "y": [887,902],
+        "template_id": 6175284714
     },
     "seed": {
         "epic": [9.5, 10],

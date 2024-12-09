@@ -76,9 +76,9 @@
         "color":"#BF4300"
     },
     "seed": {
-        "legendary" : [50,66],
-        "epic": [8, 11],
-        "rare": [3.5, 4.5],
+        "legendary" : [80,95],
+        "epic": [15, 18],
+        "rare": [4, 4.8],
         "uncommon": [0.5, 0.8],
         "common": [0.3, 0.45]
     },
